@@ -20,29 +20,27 @@
 ### Найдите в интернете любую статью (объем статьи не менее 200 слов), 
 
 ```python
-# Функция для преобразования чисел в множество с учетом правила
-def process_numbers(numbers):
-    result_set = set()
-    for number in numbers:
-        count = numbers.count(number)
-        new_entry = str(number) * count
-        result_set.add(new_entry)
-        result_set.add(number)
-    return result_set
+from collections import Counter
+import re
 
-# Списки натуральных чисел
-list_1 = [1, 1, 3, 3, 1]
-list_2 = [5, 5, 5, 5, 5, 5, 5]
-list_3 = [2, 2, 1, 2, 2, 5, 6, 7, 1, 3, 2, 2]
+# Чтение данных из файла
+with open('article.txt', 'r') as file:
+    data = file.read()
 
-# Обработка каждого списка и вывод результатов
-result_1 = process_numbers(list_1)
-result_2 = process_numbers(list_2)
-result_3 = process_numbers(list_3)
+# Преобразование текста в список слов
+words = re.findall(r'\w+', data.lower())
 
-print(result_1)
-print(result_2)
-print(result_3)
+# Подсчет количества слов
+word_count = len(words)
+
+# Определение самого часто встречающегося слова
+word_freq = Counter(words)
+most_common_word = word_freq.most_common(1)[0][0]
+
+# Вывод результатов
+print(f"Количество слов в статье: {word_count}")
+print(f"Самое часто встречающееся слово: {most_common_word}")
+
 
 ```
 ### Результат.
