@@ -1,4 +1,4 @@
-# Тема 4. Функции и модули
+# Тема 4. Функции и стандартные модули/библиотеки
 Отчет по Теме #4 выполнил(а):
 - Антохина Дарья Сергеевна
 - ИНО ЗБ ПОАС-22-1
@@ -18,122 +18,145 @@
 - к.э.н., доцент Панов М.А.
 
 ## Самостоятельная работа №1
-### Дайте подробный комментарий для кода, написанного ниже
+### Дайте подробный комментарий для кода
 
 ```python
-result = 1
+# Импорт используемых модулей
+from datetime import datetime
+from math import sqrt
+# Основная функция, которая принимает кол-во ключевых аргументов
+def main(**kwargs):
+    # Итерация по всем переданным аргументам
+    for key in kwargs.items():
+        # Расчет результата по формуле
+        result = sqrt(key[1][0] ** 2 + key[1][1] ** 2)
+        # Вывод результата
+        print(result)
+# условие:
+if __name__ == '__main__':
+    # Засечение времени начала выполнения программы
+    starttime = datetime.now()
 
-for _ in range(6):
-    result += 5
-
-print(result)
+    # Вызов функции main с передачей ключевых аргументов
+    main(
+        one=[10, 3],
+        two=[5, 4],
+        three=[15, 13],
+        four=[93, 53],
+        five=[133, 15]
+    )
+    # Вычисление времени выполнения программы
+    timecosts = datetime.now() - starttime
+    # Вывод времени выполнения
+    print(f"Program execution time {timecosts}")
 ```
 ### Результат.
-![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_3/png_3/1.png).
+![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_4/png_4/1.png).
 
 
 ## Выводы
 
-В данном коде используется цикл for().
+Все условия задания выполнены!
 
 ## Самостоятельная работа №2
-### Напишите программу, которая фразу Хэлло Ворлд выводит в обратном порядке.
+### Напишите программу, которая будет заменять игральную кость с 6 гранями.
 
 ```python
-phrase = "Hello World"
+import random
 
-for letter in reversed(phrase):
-    print(letter)
+def rolldice():
+    dicevalue = random.randint(1, 6)
+    print(f'Кубик: {dicevalue}')
+
+    if dicevalue == 5 or dicevalue == 6:
+        print('Вы победили')
+    elif dicevalue == 3 or dicevalue == 4:
+        rolldice()
+    else:
+        print('Вы проиграли')
+
+if __name__ == '__main__':
+    rolldice()  
 ```
 ### Результат.
-![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_3/png_3/2.png).
+![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_4/png_4/2.png).
 
 ## Выводы
 
-В данном коде используется цикл for(). Функция reversed() возвращает обратный итератор заданной последовательности.
+Все условия задания выполнены!
   
 ## Самостоятельная работа №3
-### Напишите программу, на вход которой поступает значение из консоли, оно должно быть числовым и в диапазоне от 0 до 10 включительно.
+### Напишите программу, которая будет выводить текущее время, с точностью до секунд на протяжении 5 секунд.
 
 ```python
-num = int(input("Введите число от 0 до 10: "))
+import datetime
+import time
 
-if num < 0 or num > 10:
-    print("Число не входит в диапазон от 0 до 10")
-else:
-    if num >= 0 and num <= 3:
-        print("Число находится в диапазоне от 0 до 3")
-    elif num > 3 and num < 6:
-        print("Число находится в диапазоне от 3 до 6")
-    else:
-        print("Число находится в диапазоне от 6 до 10")
+for _ in range(5):
+    current_time = datetime.datetime.now()
+    print(f"Текущее время: {current_time.strftime('%H:%M:%S')}")
+    time.sleep(1)
+
+current_time = datetime.datetime.now()
+print(f"Финальное время: {current_time.strftime('%H:%M:%S')}") 
 ```
 ### Результат.
-![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_3/png_3/3.png).
+![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_4/png_4/3.png).
 
 ## Выводы
 
-В данном коде вводится переменная с использованием типа данных int.
-По завершении тела может идти следующее условие, которое начинается с оператора elif (сокращение от else if — «иначе если») 
+Все условия задания выполнены!
 
 ## Самостоятельная работа №4
-### Напишите программу на Python, которая принимает предложение на английском в качестве вводных данных от пользователя.
+### Напишите программу, которая считает среднее арифметическое от аргументов вызываемое функции, с условием того, что изначальное количество этих аргументов неизвестно.
 
 ```python
-# Получение предложения от пользователя
-sentence = input("Введите предложение на английском: ")
-# Вывод длины предложения
-print("Длина предложения: ", len(sentence))
-# Перевод предложения в нижний регистр
-sentence_lower = sentence.lower()
-print("Предложение в нижнем регистре: ", sentence_lower)
-# Подсчет количества гласных
-vowels = ['a', 'e', 'i', 'o', 'u']
-count_vowels = sum(1 for letter in sentence_lower if letter in vowels)
-print("Количество гласных в предложении: ", count_vowels)
-# Замена слов "ugly" на "beauty"
-sentence_replaced = sentence_lower.replace("ugly", "beauty")
-print("Предложение с заменой: ", sentence_replaced)
+def calculate_average(*args):
+    if len(args) == 0:
+        return 0
+    else:
+        total = sum(args)
+        return total / len(args)
 
-# Проверка на начало и конец предложения
-if sentence_lower.startswith("The"):
-    print("Предложение начинается с 'The'")
-else:
-    print("Предложение не начинается с 'The'")
-
-if sentence_lower.endswith("end"):
-    print("Предложение заканчивается на 'end'")
-else:
-    print("Предложение не заканчивается на 'end'")
+if __name__ == '__main__':
+    values = [13, 7, 5, 11, 9]  # Пример входных значений
+    avg = calculate_average(*values)
+    print(f'Среднее арифметическое: {avg}')
 ```
 ### Результат.
-![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_3/png_3/4.png).
+![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_4/png_4/4.png).
 
 ## Выводы
 
-Программа выполняет действия: Длина предложения Перевод в нижний регистр Подсчет количества гласных Замена слов ugly на beauty Проверка на начало с The и на конец на End
+Все условия задания выполнены!
   
 ## Самостоятельная работа №5
-### Составьте программу, результатом которой будет данный вывод в консоль.
+### Создайте два Python файла, в одном будет выполняться вычисление площади треугольника при помощи формулы Герона (необходимо реализовать через функцию), а во втором будет происходить взаимодействие с пользователем (получение всей необходимой информации и вывод результатов).
 
 ```python
-string = 'hello'
-memory = ' world'
-counter = 0
 
-while counter < 10:
-    print(string + memory)
-    print(string)
+from document import calculate_area
 
-    counter += 1
+def get_user_input():
+    a = float(input("Введите длину стороны a: "))
+    b = float(input("Введите длину стороны b: "))
+    c = float(input("Введите длину стороны c: "))
+    return a, b, c
+
+if __name__ == '__main__':
+    print("Вычисление площади треугольника по формуле Герона.")
+    a, b, c = get_user_input()
+    area = calculate_area(a, b, c)
+    print(f"Площадь треугольника с сторонами {a}, {b}, {c} равна: {area}")
+
 
 ```
 ### Результат.
-![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_3/png_3/5.png).
+![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_4/png_4/5.png).
 
 ## Выводы
   
-Программа выполняет все условия задания.
+Все условия задания выполнены!
 
 ## Общие выводы по теме
-Условная инструкция if-elif-else (оператор ветвления) - основной инструмент выбора в Python.
+Функции и модули в Python предоставляют эффективные средства организации кода, повторного использования и управления сложными программами.
