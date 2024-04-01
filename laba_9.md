@@ -17,31 +17,97 @@
 ### Задание Садовник и помидоры
 
 ```python
-from collections import Counter
-import re
+class Tomato: #создание класса
+    states = {'Семяна': 0, 'Цветение': 1, 'Зреет': 2, 'Спелый': 3}
+    def __init__(self, index):  #инициализация объекта
+        self._index = index
+        self._state = self.states['Семяна']
 
-# Чтение данных из файла
-with open('article.txt', 'r') as file:
-    data = file.read()
+    def grow(self):  # увеличивает стадию созревания
+        if self._state < 3:
+            self._state += 1
 
-# Преобразование текста в список слов
-words = re.findall(r'\w+', data.lower())
+    def is_ripe(self):
+        return True if self._state == 3 else False
 
-# Подсчет количества слов
-word_count = len(words)
+class TomatoBush:  #создание класса
 
-# Определение самого часто встречающегося слова
-word_freq = Counter(words)
-most_common_word = word_freq.most_common(1)[0][0]
+    def __init__(self, num):
+        self.tomatoes = [Tomato(index) for index in range(1, num + 1)]
 
-# Вывод результатов
-print(f"Количество слов в статье: {word_count}")
-print(f"Самое часто встречающееся слово: {most_common_word}")
+    def grow_all(self):
+        for tomato in self.tomatoes:
+            tomato.grow()
+
+    def all_are_ripe(self): # проверяет помидоры на зрелость
+        return all([tomato.is_ripe() for tomato in self.tomatoes])
+
+    def give_away_all(self):
+        self.tomatoes = []
 
 
+class Gardener:  #создание класса
+
+    def __init__(self, name, plant):
+        self.name = name
+        self._plant = plant
+
+    def work(self):
+        self._plant.grow_all()
+
+    def harvest(self): # проверяет, все ли помидоры зрелые
+        if self._plant.all_are_ripe():
+            print('Урожай собран!')
+            self._plant.give_away_all()
+        else:
+            print('Томаты еще не дозрели')
+
+    @staticmethod
+    def knowledge_base():
+        print('Справка по садоводству:')
+        print('1. Не забывайте регулярно поливать и подкармливать растения')
+        print('2. Определите правильное расстояние между растениями, чтобы они не мешали друг другу в росте')
+        print('3. Удалите поврежденные листья и плоды, чтобы предотвратить распространение болезней')
+
+    # Вызов справки по садоводству
+
+
+Gardener.knowledge_base()
+
+# Создание объектов классов TomatoBush и Gardener
+bush = TomatoBush(5)
+gardener = Gardener('KEVIN', bush)
+
+# Уход за кустом с помидорами
+gardener.work()
+gardener.work()
+gardener.work()
+
+
+def harvest_tomatoes(unripe=True):
+    if unripe:
+        print("Попробуйте собрать урожай, когда томаты дозреют")
+    else:
+        print("Томаты уже спелые, можно начинать сбор урожая")
+
+
+# Проверка на сбор урожая, когда томаты еще не спелые
+harvest_tomatoes(unripe=True)
+
+# Сбор урожая
+gardener.harvest()
+
+# Продолжение ухода за кустом, пока томаты не дозреют
+gardener.work()
+gardener.harvest()
+gardener.work()
+
+# Сбор урожая после дозревания всех томатов
+gardener.work()
+gardener.harvest()
 ```
 ### Результат.
-![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_7/png_7/1.png).
+![Меню](https://github.com/Dar13lol/Software_Engineering/blob/Laba_9/png_9/1.png).
 
 
 ## Выводы
